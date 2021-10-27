@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "new": "node ./scripts/new.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
