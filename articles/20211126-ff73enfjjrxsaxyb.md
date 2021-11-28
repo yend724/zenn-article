@@ -3,7 +3,7 @@ title: "ユークリッドの互除法を Canvas で可視化する"
 emoji: "🙆"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["math", "JavaScript", "TypeScript", "Canvas"]
-published: false
+published: true
 ---
 
 # 概要
