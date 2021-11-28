@@ -107,9 +107,9 @@ a ÷ b = c ... d が何を表しているのか
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 const context = canvas.getContext("2d")!;
 
-let n1 = 56; // 自然数　（大きい）
+let n1 = 56; // 自然数（大きい）
 let n2 = 36; // 自然数(小さい)
-const scale = Math.floor((window.innerWidth / n1) * 0.8); // 長方形の大きさを決めるための係数。windowの横幅の0．８倍に調整
+const scale = Math.floor((window.innerWidth / n1) * 0.8); // 長方形の大きさを決めるための係数。windowの横幅の0.8倍に調整
 n1 = n1 * scale;
 n2 = n2 * scale;
 
