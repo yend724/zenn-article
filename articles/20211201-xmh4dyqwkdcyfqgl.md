@@ -35,14 +35,14 @@ CSS だけでテキストカラーにウェーブアニメーションを適用�
 	display: inline-block;
 	font-size: 60px;
 	font-weight: 500;
-	color: blue;
+	color: red;
 	&::before {
 		content: "A";
 		position: absolute;
 		top: 0;
 		left: 0;
 		height: 0;
-		color: red;
+		color: blue;
 		text-shadow: 1px 1px 0 #fff, 1px 0 0 #fff, 0 1px 0 #fff, -1px -1px 0 #fff,
 			-1px 0 #fff, 0 -1px 0 #fff; // 背景色に合わせてで縁取り
 		overflow: hidden;
@@ -85,13 +85,13 @@ CSS だけでテキストカラーにウェーブアニメーションを適用�
 .text {
 	position: relative;
 	display: inline-block;
-	color: blue;
+	color: red;
 	&::before {
 		position: absolute;
 		top: 0;
 		left: 0;
 		height: 0;
-		color: red;
+		color: blue;
 		text-shadow: 1px 1px 0 #fff, 1px 0 0 #fff, 0 1px 0 #fff, -1px -1px 0 #fff,
 			-1px 0 #fff, 0 -1px 0 #fff;
 		overflow: hidden;
@@ -184,13 +184,13 @@ CSS だけでテキストカラーにウェーブアニメーションを適用�
 .text {
 	position: relative;
 	display: inline-block;
-	color: blue;
+	color: red;
 	&::before {
 		position: absolute;
 		top: 0;
 		left: 0;
 		height: 0;
-		color: red;
+		color: blue;
 		text-shadow: 1px 1px 0 #fff, 1px 0 0 #fff, 0 1px 0 #fff, -1px -1px 0 #fff,
 			-1px 0 #fff, 0 -1px 0 #fff;
 		overflow: hidden;
