@@ -32,8 +32,9 @@ CSS だけでテキストカラーにウェーブアニメーションを適用�
 ```scss:scss
 .animation {
 	position: relative;
+	display: inline-block;
 	font-size: 60px;
-	font-weight: 600;
+	font-weight: 500;
 	color: blue;
 	&::before {
 		content: "A";
@@ -79,10 +80,11 @@ CSS だけでテキストカラーにウェーブアニメーションを適用�
 ```scss:scss
 .animation {
 	font-size: 60px;
-	font-weight: 600;
+	font-weight: 500;
 }
 .text {
 	position: relative;
+	display: inline-block;
 	color: blue;
 	&::before {
 		position: absolute;
@@ -181,6 +183,7 @@ CSS だけでテキストカラーにウェーブアニメーションを適用�
 }
 .text {
 	position: relative;
+	display: inline-block;
 	color: blue;
 	&::before {
 		position: absolute;
