@@ -26,8 +26,8 @@ START ボタンを押すとカウントの実行。STOP ボタンを押すとカ
 
 ```js
 const loop = () => {
-	// 処理
-	requestAnimationFrame(step);
+  // 処理
+  requestAnimationFrame(step);
 };
 // ループの実行
 loop();
@@ -44,12 +44,12 @@ https://developer.mozilla.org/ja/docs/Web/API/Window/cancelAnimationFrame
 ```js
 let count = 0;
 const loop = () => {
-	// 処理
-	if (count < 200) {
-		// count が　200　より小さい時だけ
-		requestAnimationFrame(loop);
-	}
-	count++;
+  // 処理
+  if (count < 200) {
+    // count が　200　より小さい時だけ
+    requestAnimationFrame(loop);
+  }
+  count++;
 };
 // ループの開始
 loop();
@@ -61,13 +61,13 @@ loop();
 let reqid;
 let count = 0;
 const loop = () => {
-	reqid = requestAnimationFrame(loop);
-	// 処理
-	if (count >= 200) {
-		// count が　200　より小さい時だけ
-		cancelAnimationFrame(reqid);
-	}
-	count++;
+  reqid = requestAnimationFrame(loop);
+  // 処理
+  if (count >= 200) {
+    // count が　200　より小さい時だけ
+    cancelAnimationFrame(reqid);
+  }
+  count++;
 };
 // ループの開始
 loop();
@@ -83,15 +83,15 @@ loop();
 
 ```jsx
 const Component = () => {
-	const loop = () => {
-		// ループしたい処理
-		requestAnimationFrame(loop);
-	};
-	React.useEffect(() => {
-		loop();
-	}, [loop]);
+  const loop = () => {
+    // ループしたい処理
+    requestAnimationFrame(loop);
+  };
+  React.useEffect(() => {
+    loop();
+  }, [loop]);
 
-	//...略
+  //...略
 };
 ```
 
@@ -102,17 +102,17 @@ const Component = () => {
 
 ```jsx
 const Component = () => {
-	const reqIdRef = React.useRef();
-	const loop = () => {
-		// ループしたい処理
-		reqIdRef.current = requestAnimationFrame(loop);
-	};
-	React.useEffect(() => {
-		loop();
-		return () => cancelAnimationFrame(reqIdRef.current);
-	}, []);
+  const reqIdRef = React.useRef();
+  const loop = () => {
+    // ループしたい処理
+    reqIdRef.current = requestAnimationFrame(loop);
+  };
+  React.useEffect(() => {
+    loop();
+    return () => cancelAnimationFrame(reqIdRef.current);
+  }, []);
 
-	//...略
+  //...略
 };
 ```
 
@@ -124,20 +124,20 @@ const Component = () => {
 
 ```jsx
 const Component = () => {
-	const reqIdRef = React.useRef();
-	let counter = 0;
+  const reqIdRef = React.useRef();
+  let counter = 0;
 
-	const loop = () => {
-		reqIdRef.current = requestAnimationFrame(loop);
-		counter++;
-	};
+  const loop = () => {
+    reqIdRef.current = requestAnimationFrame(loop);
+    counter++;
+  };
 
-	React.useEffect(() => {
-		loop();
-		return () => cancelAnimationFrame(reqIdRef.current);
-	}, []);
+  React.useEffect(() => {
+    loop();
+    return () => cancelAnimationFrame(reqIdRef.current);
+  }, []);
 
-	return <div>{counter}</div>;
+  return <div>{counter}</div>;
 };
 ```
 
@@ -147,20 +147,20 @@ const Component = () => {
 
 ```jsx
 const Component = () => {
-	const reqIdRef = React.useRef();
-	const [counter, setCounter] = React.useState(0);
+  const reqIdRef = React.useRef();
+  const [counter, setCounter] = React.useState(0);
 
-	const loop = () => {
-		reqIdRef.current = requestAnimationFrame(loop);
-		setCounter(pre => ++pre);
-	};
+  const loop = () => {
+    reqIdRef.current = requestAnimationFrame(loop);
+    setCounter(pre => ++pre);
+  };
 
-	React.useEffect(() => {
-		loop();
-		return () => cancelAnimationFrame(reqIdRef.current);
-	}, []);
+  React.useEffect(() => {
+    loop();
+    return () => cancelAnimationFrame(reqIdRef.current);
+  }, []);
 
-	return <div>{counter}</div>;
+  return <div>{counter}</div>;
 };
 ```
 
@@ -173,30 +173,30 @@ const Component = () => {
 ```jsx
 // ループで実行したい処理 を callback関数に渡す
 const useAnimationFrame = (callback = () => {}) => {
-	const reqIdRef = React.useRef();
-	const loop = () => {
-		reqIdRef.current = requestAnimationFrame(loop);
-		callback();
-	};
+  const reqIdRef = React.useRef();
+  const loop = () => {
+    reqIdRef.current = requestAnimationFrame(loop);
+    callback();
+  };
 
-	React.useEffect(() => {
-		reqIdRef.current = requestAnimationFrame(loop);
-		return () => cancelAnimationFrame(reqIdRef.current);
-	}, []);
+  React.useEffect(() => {
+    reqIdRef.current = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(reqIdRef.current);
+  }, []);
 };
 
 const Component = () => {
-	const [counter, setCounter] = React.useState(0);
+  const [counter, setCounter] = React.useState(0);
 
-	useAnimationFrame(() => {
-		setCounter(prevCount => ++prevCount);
-	});
+  useAnimationFrame(() => {
+    setCounter(prevCount => ++prevCount);
+  });
 
-	return (
-		<div>
-			<div>{counter}</div>
-		</div>
-	);
+  return (
+    <div>
+      <div>{counter}</div>
+    </div>
+  );
 };
 ```
 
@@ -209,18 +209,18 @@ const Component = () => {
 ```jsx
 // ループで実行したい処理 を callback関数に渡す
 const useAnimationFrame = (callback = () => {}) => {
-	const reqIdRef = React.useRef();
-	// useCallback で callback 関数が更新された時のみ関数を再生成
-	const loop = React.useCallback(() => {
-		reqIdRef.current = requestAnimationFrame(loop);
-		callback();
-	}, [callback]);
+  const reqIdRef = React.useRef();
+  // useCallback で callback 関数が更新された時のみ関数を再生成
+  const loop = React.useCallback(() => {
+    reqIdRef.current = requestAnimationFrame(loop);
+    callback();
+  }, [callback]);
 
-	React.useEffect(() => {
-		reqIdRef.current = requestAnimationFrame(loop);
-		return () => cancelAnimationFrame(reqIdRef.current);
-		// loop を依存配列に
-	}, [loop]);
+  React.useEffect(() => {
+    reqIdRef.current = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(reqIdRef.current);
+    // loop を依存配列に
+  }, [loop]);
 };
 ```
 
@@ -228,32 +228,32 @@ const useAnimationFrame = (callback = () => {}) => {
 
 ```jsx
 const useAnimationFrame = (callback = () => {}) => {
-	const reqIdRef = React.useRef();
-	const loop = React.useCallback(() => {
-		reqIdRef.current = requestAnimationFrame(loop);
-		callback();
-	}, [callback]);
+  const reqIdRef = React.useRef();
+  const loop = React.useCallback(() => {
+    reqIdRef.current = requestAnimationFrame(loop);
+    callback();
+  }, [callback]);
 
-	React.useEffect(() => {
-		reqIdRef.current = requestAnimationFrame(loop);
-		return () => cancelAnimationFrame(reqIdRef.current);
-	}, [loop]);
+  React.useEffect(() => {
+    reqIdRef.current = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(reqIdRef.current);
+  }, [loop]);
 };
 
 const Component = () => {
-	const [counter, setCounter] = React.useState(0);
+  const [counter, setCounter] = React.useState(0);
 
-	// setCounter するたびに関数を再生成するのを防ぐ
-	const countUp = React.useCallback(() => {
-		setCounter(prevCount => ++prevCount);
-	}, []);
-	useAnimationFrame(countUp);
+  // setCounter するたびに関数を再生成するのを防ぐ
+  const countUp = React.useCallback(() => {
+    setCounter(prevCount => ++prevCount);
+  }, []);
+  useAnimationFrame(countUp);
 
-	return (
-		<div>
-			<div>{counter}</div>
-		</div>
-	);
+  return (
+    <div>
+      <div>{counter}</div>
+    </div>
+  );
 };
 ```
 
@@ -268,38 +268,38 @@ const Component = () => {
 // - true ならループ
 // - false なら停止
 const useAnimationFrame = (isRunning, callback = () => {}) => {
-	const reqIdRef = React.useRef();
-	const loop = React.useCallback(() => {
-		if (isRunning) {
-			// isRunning が true の時だけループ
-			reqIdRef.current = requestAnimationFrame(loop);
-			callback();
-		}
-		// isRunning も依存配列に追加
-	}, [isRunning, callback]);
+  const reqIdRef = React.useRef();
+  const loop = React.useCallback(() => {
+    if (isRunning) {
+      // isRunning が true の時だけループ
+      reqIdRef.current = requestAnimationFrame(loop);
+      callback();
+    }
+    // isRunning も依存配列に追加
+  }, [isRunning, callback]);
 
-	React.useEffect(() => {
-		reqIdRef.current = requestAnimationFrame(loop);
-		return () => cancelAnimationFrame(reqIdRef.current);
-	}, [loop]);
+  React.useEffect(() => {
+    reqIdRef.current = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(reqIdRef.current);
+  }, [loop]);
 };
 
 const Component = () => {
-	const [counter, setCounter] = React.useState(0);
-	const [isRunning, setIsRunning] = React.useState(false);
+  const [counter, setCounter] = React.useState(0);
+  const [isRunning, setIsRunning] = React.useState(false);
 
-	const countUp = React.useCallback(() => {
-		setCounter(prevCount => ++prevCount);
-	}, []);
-	useAnimationFrame(isRunning, countUp);
+  const countUp = React.useCallback(() => {
+    setCounter(prevCount => ++prevCount);
+  }, []);
+  useAnimationFrame(isRunning, countUp);
 
-	return (
-		<div>
-			<div>{counter}</div>
-			<button onClick={() => setIsRunning(true)}>START</button>
-			<button onClick={() => setIsRunning(false)}>STOP</button>
-		</div>
-	);
+  return (
+    <div>
+      <div>{counter}</div>
+      <button onClick={() => setIsRunning(true)}>START</button>
+      <button onClick={() => setIsRunning(false)}>STOP</button>
+    </div>
+  );
 };
 ```
 

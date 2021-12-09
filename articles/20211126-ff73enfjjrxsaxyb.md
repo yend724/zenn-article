@@ -55,11 +55,11 @@ let a = 20;
 let b = 12;
 
 while (b > 0) {
-	const c = Math.floor(a / b); // 商
-	const d = a % b; // 余り
-	console.log(a + "÷" + b + "=" + c + "..." + d);
-	a = b;
-	b = d;
+  const c = Math.floor(a / b); // 商
+  const d = a % b; // 余り
+  console.log(a + "÷" + b + "=" + c + "..." + d);
+  a = b;
+  b = d;
 }
 
 /*
@@ -122,29 +122,29 @@ let a = n1;
 let b = n2;
 
 let posX = 0,
-	posY = 0;
+  posY = 0;
 
 let count = 0; //横に分割するか縦に分割するか決めるためのカウンタ
 while (b > 0) {
-	const c = Math.floor(a / b); // 商
-	const d = a % b; // 余り
-	// 商の数だけ正方形が取得できる
-	for (let i = 0; i < c; i++) {
-		context.fillStyle = `rgb(${Math.floor(Math.random() * 256)},${Math.floor(
-			Math.random() * 256
-		)},${Math.floor(Math.random() * 256)})`;
-		context.fillRect(posX, posY, b, b);
-		if (count % 2 === 0) {
-			// count　が　2　で割り切れる時は横に分割
-			posX += b;
-		} else {
-			// count　が　2　で割り切れない時は縦に分割
-			posY += b;
-		}
-	}
-	a = b;
-	b = d;
-	count++;
+  const c = Math.floor(a / b); // 商
+  const d = a % b; // 余り
+  // 商の数だけ正方形が取得できる
+  for (let i = 0; i < c; i++) {
+    context.fillStyle = `rgb(${Math.floor(Math.random() * 256)},${Math.floor(
+      Math.random() * 256
+    )},${Math.floor(Math.random() * 256)})`;
+    context.fillRect(posX, posY, b, b);
+    if (count % 2 === 0) {
+      // count　が　2　で割り切れる時は横に分割
+      posX += b;
+    } else {
+      // count　が　2　で割り切れない時は縦に分割
+      posY += b;
+    }
+  }
+  a = b;
+  b = d;
+  count++;
 }
 ```
 

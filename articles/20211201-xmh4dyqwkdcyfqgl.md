@@ -31,31 +31,31 @@ CSS だけでテキストカラーにウェーブアニメーションを適用�
 
 ```scss:scss
 .animation {
-	position: relative;
-	display: inline-block;
-	font-size: 60px;
-	font-weight: 500;
-	color: red;
-	&::before {
-		content: "A";
-		position: absolute;
-		top: 0;
-		left: 0;
-		height: 0;
-		color: blue;
-		text-shadow: 1px 1px 0 #fff, 1px 0 0 #fff, 0 1px 0 #fff, -1px -1px 0 #fff,
-			-1px 0 #fff, 0 -1px 0 #fff; // 背景色に合わせてで縁取り
-		overflow: hidden;
-		animation: move 0.5s ease infinite alternate;
-	}
+  position: relative;
+  display: inline-block;
+  font-size: 60px;
+  font-weight: 500;
+  color: red;
+  &::before {
+    content: "A";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 0;
+    color: blue;
+    text-shadow: 1px 1px 0 #fff, 1px 0 0 #fff, 0 1px 0 #fff, -1px -1px 0 #fff,
+      -1px 0 #fff, 0 -1px 0 #fff; // 背景色に合わせてで縁取り
+    overflow: hidden;
+    animation: move 0.5s ease infinite alternate;
+  }
 }
 @keyframes move {
-	0% {
-		height: 0%;
-	}
-	100% {
-		height: 100%;
-	}
+  0% {
+    height: 0%;
+  }
+  100% {
+    height: 100%;
+  }
 }
 ```
 
@@ -69,87 +69,87 @@ CSS だけでテキストカラーにウェーブアニメーションを適用�
 
 ```html:html
 <p class="animation">
-	<span class="text">A</span><span class="text">n</span
-	><span class="text">i</span><span class="text">m</span
-	><span class="text">a</span><span class="text">t</span
-	><span class="text">i</span><span class="text">o</span
-	><span class="text">n</span>
+  <span class="text">A</span><span class="text">n</span
+  ><span class="text">i</span><span class="text">m</span
+  ><span class="text">a</span><span class="text">t</span
+  ><span class="text">i</span><span class="text">o</span
+  ><span class="text">n</span>
 </p>
 ```
 
 ```scss:scss
 .animation {
-	font-size: 60px;
-	font-weight: 500;
+  font-size: 60px;
+  font-weight: 500;
 }
 .text {
-	position: relative;
-	display: inline-block;
-	color: red;
-	&::before {
-		position: absolute;
-		top: 0;
-		left: 0;
-		height: 0;
-		color: blue;
-		text-shadow: 1px 1px 0 #fff, 1px 0 0 #fff, 0 1px 0 #fff, -1px -1px 0 #fff,
-			-1px 0 #fff, 0 -1px 0 #fff;
-		overflow: hidden;
-		animation: move 0.5s ease infinite alternate;
-	}
-	&:nth-child(1) {
-		&::before {
-			content: "A";
-		}
-	}
-	&:nth-child(2) {
-		&::before {
-			content: "n";
-		}
-	}
-	&:nth-child(3) {
-		&::before {
-			content: "i";
-		}
-	}
-	&:nth-child(4) {
-		&::before {
-			content: "m";
-		}
-	}
-	&:nth-child(5) {
-		&::before {
-			content: "a";
-		}
-	}
-	&:nth-child(6) {
-		&::before {
-			content: "t";
-		}
-	}
-	&:nth-child(7) {
-		&::before {
-			content: "i";
-		}
-	}
-	&:nth-child(8) {
-		&::before {
-			content: "o";
-		}
-	}
-	&:nth-child(9) {
-		&::before {
-			content: "n";
-		}
-	}
+  position: relative;
+  display: inline-block;
+  color: red;
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 0;
+    color: blue;
+    text-shadow: 1px 1px 0 #fff, 1px 0 0 #fff, 0 1px 0 #fff, -1px -1px 0 #fff,
+      -1px 0 #fff, 0 -1px 0 #fff;
+    overflow: hidden;
+    animation: move 0.5s ease infinite alternate;
+  }
+  &:nth-child(1) {
+    &::before {
+      content: "A";
+    }
+  }
+  &:nth-child(2) {
+    &::before {
+      content: "n";
+    }
+  }
+  &:nth-child(3) {
+    &::before {
+      content: "i";
+    }
+  }
+  &:nth-child(4) {
+    &::before {
+      content: "m";
+    }
+  }
+  &:nth-child(5) {
+    &::before {
+      content: "a";
+    }
+  }
+  &:nth-child(6) {
+    &::before {
+      content: "t";
+    }
+  }
+  &:nth-child(7) {
+    &::before {
+      content: "i";
+    }
+  }
+  &:nth-child(8) {
+    &::before {
+      content: "o";
+    }
+  }
+  &:nth-child(9) {
+    &::before {
+      content: "n";
+    }
+  }
 }
 @keyframes move {
-	0% {
-		height: 0%;
-	}
-	100% {
-		height: 100%;
-	}
+  0% {
+    height: 0%;
+  }
+  100% {
+    height: 100%;
+  }
 }
 ```
 
@@ -163,58 +163,58 @@ CSS だけでテキストカラーにウェーブアニメーションを適用�
 
 ```html:html
 <p class="animation">
-	<!-- data-text属性の追加 -->
-	<span class="text" data-text="A">A</span
-	><span class="text" data-text="n">n</span
-	><span class="text" data-text="i">i</span
-	><span class="text" data-text="m">m</span
-	><span class="text" data-text="a">a</span
-	><span class="text" data-text="t">t</span
-	><span class="text" data-text="i">i</span
-	><span class="text" data-text="o">o</span
-	><span class="text" data-text="n">n</span>
+  <!-- data-text属性の追加 -->
+  <span class="text" data-text="A">A</span
+  ><span class="text" data-text="n">n</span
+  ><span class="text" data-text="i">i</span
+  ><span class="text" data-text="m">m</span
+  ><span class="text" data-text="a">a</span
+  ><span class="text" data-text="t">t</span
+  ><span class="text" data-text="i">i</span
+  ><span class="text" data-text="o">o</span
+  ><span class="text" data-text="n">n</span>
 </p>
 ```
 
 ```scss:scss
 .animation {
-	font-size: 60px;
-	font-weight: 600;
+  font-size: 60px;
+  font-weight: 600;
 }
 .text {
-	position: relative;
-	display: inline-block;
-	color: red;
-	&::before {
-		position: absolute;
-		top: 0;
-		left: 0;
-		height: 0;
-		color: blue;
-		text-shadow: 1px 1px 0 #fff, 1px 0 0 #fff, 0 1px 0 #fff, -1px -1px 0 #fff,
-			-1px 0 #fff, 0 -1px 0 #fff;
-		overflow: hidden;
-		animation: move 0.5s ease infinite alternate;
-	}
+  position: relative;
+  display: inline-block;
+  color: red;
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 0;
+    color: blue;
+    text-shadow: 1px 1px 0 #fff, 1px 0 0 #fff, 0 1px 0 #fff, -1px -1px 0 #fff,
+      -1px 0 #fff, 0 -1px 0 #fff;
+    overflow: hidden;
+    animation: move 0.5s ease infinite alternate;
+  }
 
-	// 1 ~ 20 まで
-	// 20 は対象の文字数より大きい数字であればなんでもOK
-	@for $i from 1 through 20 {
-		&:nth-child(#{$i}) {
-			&::before {
-				content: attr(data-text); //data-text　属性の文字を設定できる
-				animation-delay: (($i - 1) / 10) + s; // 0.1s　ずつずらす
-			}
-		}
-	}
+  // 1 ~ 20 まで
+  // 20 は対象の文字数より大きい数字であればなんでもOK
+  @for $i from 1 through 20 {
+    &:nth-child(#{$i}) {
+      &::before {
+        content: attr(data-text); //data-text　属性の文字を設定できる
+        animation-delay: (($i - 1) / 10) + s; // 0.1s　ずつずらす
+      }
+    }
+  }
 }
 @keyframes move {
-	0% {
-		height: 0%;
-	}
-	100% {
-		height: 100%;
-	}
+  0% {
+    height: 0%;
+  }
+  100% {
+    height: 100%;
+  }
 }
 ```
 
@@ -232,12 +232,12 @@ CSS だけでテキストカラーにウェーブアニメーションを適用�
 ```js:javascript
 const $animations = document.querySelectorAll(".animation");
 $animations.forEach($animation => {
-	const text = $animation.textContent.trim();
-	const splitedText = text
-		.split("")
-		.map(c => `<span class="text" data-text="${c}">${c}</span>`)
-		.join("");
-	$animation.innerHTML = splitedText;
+  const text = $animation.textContent.trim();
+  const splitedText = text
+    .split("")
+    .map(c => `<span class="text" data-text="${c}">${c}</span>`)
+    .join("");
+  $animation.innerHTML = splitedText;
 });
 ```
 
