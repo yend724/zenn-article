@@ -6,7 +6,9 @@ topics: ["CSS", "Sass", "Pug"]
 published: true
 ---
 
-本記事は「[CSS | Advent Calendar 2021](https://qiita.com/advent-calendar/2021/css)」の 7 日目の記事になります。
+:::message
+本記事は「[CSS Advent Calendar 2021](https://qiita.com/advent-calendar/2021/css)」の 7 日目の記事になります。
+:::
 
 初めに断っておくと、本記事の内容は実務では**役に立たない**、もしくは**役に立たない可能性が高い**です。なので遊びの延長として捉えてもらえるとありがたく思います。
 
@@ -71,7 +73,7 @@ $cols: 4;
 
 ```css:css
 .older ~ .younger {
-	color: red;
+  color: red;
 }
 ```
 
@@ -102,42 +104,42 @@ https://developer.mozilla.org/ja/docs/Web/CSS/General_sibling_combinator
 $rows: 25;
 $cols: 2;
 .container {
-	position: relative;
-	display: flex;
-	flex-wrap: wrap;
-	width: 100%;
-	height: 100%;
-	> .point {
-		display: inline-block;
-		width: 100% / $cols;
-		height: 100% / $rows;
-		z-index: 100; // .point .faceより前面に来る必要がある
-		// マウスが右側にあるか左側にあるかで、回転の向きを変える
-		@for $i from 0 through ($rows - 1) {
-			// ($i * 2) + 1 は奇数なので左側にマウスがある時
-			&:nth-child(#{($i * 2) + 1}):hover ~ .face {
-				.eye {
-					&.l {
-						transform: rotate(#{$i * -180 / ($rows - 1)}deg);
-					}
-					&.r {
-						transform: rotate(#{$i * -180 / ($rows - 1)}deg);
-					}
-				}
-			}
-			// ($i * 2) + 1 は偶数なので右側にマウスがある時
-			&:nth-child(#{($i * 2) + 2}):hover ~ .face {
-				.eye {
-					&.l {
-						transform: rotate(#{$i * 180 / ($rows - 1)}deg);
-					}
-					&.r {
-						transform: rotate(#{$i * 180 / ($rows - 1)}deg);
-					}
-				}
-			}
-		}
-	}
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100%;
+  > .point {
+    display: inline-block;
+    width: 100% / $cols;
+    height: 100% / $rows;
+    z-index: 100; // .point .faceより前面に来る必要がある
+    // マウスが右側にあるか左側にあるかで、回転の向きを変える
+    @for $i from 0 through ($rows - 1) {
+      // ($i * 2) + 1 は奇数なので左側にマウスがある時
+      &:nth-child(#{($i * 2) + 1}):hover ~ .face {
+        .eye {
+          &.l {
+            transform: rotate(#{$i * -180 / ($rows - 1)}deg);
+          }
+          &.r {
+            transform: rotate(#{$i * -180 / ($rows - 1)}deg);
+          }
+        }
+      }
+      // ($i * 2) + 1 は偶数なので右側にマウスがある時
+      &:nth-child(#{($i * 2) + 2}):hover ~ .face {
+        .eye {
+          &.l {
+            transform: rotate(#{$i * 180 / ($rows - 1)}deg);
+          }
+          &.r {
+            transform: rotate(#{$i * 180 / ($rows - 1)}deg);
+          }
+        }
+      }
+    }
+  }
 }
 ```
 
