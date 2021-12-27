@@ -1,5 +1,5 @@
 ---
-title: "React で requestAnimationFrame を使う"
+title: "React で requestAnimationFrame を扱う"
 emoji: "💬"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["JavaScript", "React"]
