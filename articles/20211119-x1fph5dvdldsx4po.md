@@ -8,8 +8,8 @@ published: true
 
 # 概要
 
-アニメーションでよく使用される `requestAnimationFrame`。
-非常に便利で使いやすいメソッドなのですが、React で扱うには少々癖があったので、今回はそのことについて書いていこうと思います。
+アニメーションでよく使用される`requestAnimationFrame`。
+非常に便利で使いやすいメソッドなのですが、Reactで扱うには少々癖があったので、今回はそのことについて書いていこうと思います。
 
 # 完成形
 
@@ -17,12 +17,12 @@ published: true
 
 @[codepen](https://codepen.io/yend24/pen/ZEJmVZr)
 
-START ボタンを押すとカウントの実行。STOP ボタンを押すとカウントの停止ができます。
+STARTボタンを押すとカウントの実行。STOPボタンを押すとカウントの停止ができます。
 シンプルなカウンターですが、この実装を完成として、ここまでの過程を考えていきます。
 
 # requestAnimationFrame
 
-まず最初に `requestAnimationFrame` でループする簡単な使い方を紹介します。
+まず`requestAnimationFrame`でループする簡単な使い方を紹介します。
 
 ```js
 const loop = () => {
@@ -34,7 +34,7 @@ loop();
 ```
 
 よくみる形ですね。コールバックで再帰的に関数を実行することでループを実現しています。
-ループを止めるためには再帰呼び出しを止めるか、`cancelAnimationFrame` を使います。
+ループを止めるためには再帰呼び出しを止めるか、`cancelAnimationFrame`を使います。
 
 https://developer.mozilla.org/ja/docs/Web/API/Window/requestAnimationFrame
 https://developer.mozilla.org/ja/docs/Web/API/Window/cancelAnimationFrame
@@ -73,13 +73,13 @@ const loop = () => {
 loop();
 ```
 
-# React で requestAnimationFrame を使用する
+# ReactでrequestAnimationFrameを使用する
 
-順を追って実装していきます。
+順を追って実装します。
 
 ## シンプルに実装してみる
 
-まずはシンプルに React に埋め込んでみます。
+まずはシンプルにReactに埋め込んでみます。
 
 ```jsx
 const Component = () => {
@@ -96,9 +96,9 @@ const Component = () => {
 ```
 
 一見良いように見えますが、コンポーネントが破棄されたときにループを止める必要がありますね。
-したがって、`useEffect` のクリーンアップ関数として `cancelAnimationFrame` を使います。
+したがって、`useEffect`のクリーンアップ関数として`cancelAnimationFrame`を使います。
 
-しかし、`cancelAnimationFrame` を使うためには `requestAnimationFrame` から返される `requestID` が必要です。`requestID` を保持するために useRef を使用しましょう。
+しかし、`cancelAnimationFrame`を使うためには`requestAnimationFrame`から返される`requestID`が必要です。`requestID`を保持するために`useRef`を使用しましょう。
 
 ```jsx
 const Component = () => {
@@ -141,9 +141,9 @@ const Component = () => {
 };
 ```
 
-実際に上記を実装してみると `counter` が更新されないのがわかると思います。
-理由としては単純で `useRef` は再描画をトリガーからです。
-解決策として、`useState` を使います。
+実際に上記を実装してみると`counter`が更新されません。
+理由としては単純で`useRef`は再描画をトリガーからです。
+解決策として、`useState`を使います。
 
 ```jsx
 const Component = () => {
@@ -166,9 +166,9 @@ const Component = () => {
 
 フレームカウンターが実装できました。
 
-## Hooks に切り出してみる
+## Hooksに切り出してみる
 
-少々このままでは煩わしいので Hooks に切り出してみます。
+このままでは少々煩わしいのでHooksに切り出してみます。
 
 ```jsx
 // ループで実行したい処理 を callback関数に渡す
@@ -257,11 +257,11 @@ const Component = () => {
 };
 ```
 
-少々冗長に見えますが、上記で無駄な関数の再生成が防げるようになりました。
+若干冗長に見えますが、上記でムダな関数の再生成が防げるようになりました。
 
-## START と STOP ボタンを作る
+## STARTとSTOPボタンを作る
 
-それでは完成形のように START と STOP ボタンを実装します。
+それでは完成形のようにSTARTとSTOPボタンを実装します。
 
 ```jsx
 // 第一引数に boolean をとるように修正
@@ -303,7 +303,7 @@ const Component = () => {
 };
 ```
 
-引数に `isRunning` をとるように hooks を変更し、true ならループ実行、false ならループ停止を実装しました。
+引数に `isRunning` をとるようにhooksを変更し、trueならループ実行、falseならループ停止を実装しました。
 これで最初に載せたコードの完成となります！
 
 # 少し応用
@@ -315,7 +315,7 @@ const Component = () => {
 
 # まとめ
 
-React において `requestAnimationFrame` を扱う方法でした。
+Reactにおいて`requestAnimationFrame`を扱う方法でした。
 その性質上、パフォーマンスを考えるとだいぶ癖があるように感じました。
 諸々検討した上で、問題が発生しないように使用できると良いですね。
 

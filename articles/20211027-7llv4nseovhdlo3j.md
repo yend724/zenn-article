@@ -1,5 +1,5 @@
 ---
-title: "useReducer を使ってフォームの状態管理をする"
+title: "useReducerを使ってフォームの状態管理をする"
 emoji: "🌊"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["React", "JavaScript"]
@@ -8,19 +8,19 @@ published: true
 
 ## 概要
 
-`useReducer` を使用してフォームの状態管理をすると、すっきりとしたコードが書けるよという話です。
+`useReducer`を使用してフォームの状態管理をすると、すっきりとしたコードが書けるよという話です。
 
-## フォームと React
+## フォームとReact
 
-React のフォームは公式ドキュメントにも記載があります。  
+Reactのフォームは公式ドキュメントにも記載があります。
 [フォーム – React](https://ja.reactjs.org/docs/forms.html)
 
-内容としてはクラスコンポーネントの記述なので `setState` で状態管理をする方法が書かれています。  
-ですが時代は関数コンポーネント。そこで **React Hooks** を使ってフォームの状態管理を行なっていきたいと思います。
+内容としてはクラスコンポーネントの記述なので`setState`で状態管理をする方法が書かれています。
+ですが時代は関数コンポーネント。そこで**React Hooks**を使ってフォームの状態管理を行なっていきたいと思います。
 
-## useState を使用したフォームの状態管理
+## useStateを使用したフォームの状態管理
 
-実際に、**React Hooks** で記載するとどうなるか、まず思いつくのが `useState` での状態管理ですね。
+実際に、**React Hooks**で記載するとどうなるか、まず思いつくのが`useState`での状態管理ですね。
 
 以下にシンプルな例を示します。
 
@@ -61,11 +61,11 @@ const useStateForm = () => {
 export default useStateForm;
 ```
 
-上記のコードは特に問題ありません。  
-input の value に対象の state を渡して、`onChange` で state の値を更新しています。  
-Submit ボタンをクリックすることで、今の state を確認できます。
+上記のコードはとくに問題ありません。
+inputのvalueに対象のstateを渡して、`onChange`でstateの値を更新しています。
+Submitボタンをクリックすることで、今のstateを確認できます。
 
-では、次に state の数が増加した時のコードを書いてみます。
+では、次にstateの数が増加した時のコードを書いてみます。
 
 ```jsx:title=jsx
 import React, { useState } from "react";
@@ -145,15 +145,15 @@ const useStateForm = () => {
 export default useStateForm;
 ```
 
-name に加え、age、email、isPublic と管理する state が 4 つに増えました。  
-まだなんとか見れなくもないですが、急に見づらくなった印象です。  
-似通った記述なのに、処理が別々の関数に分けられてしまっています。同様に state も別々に管理されています。  
-これ以上 state が増えようものなら、スパゲティコードになる未来が予測できますね。
+nameに加え、age、email、isPublicと管理するstateが4つに増えました。
+まだなんとか見れなくもないですが、急に見づらくなった印象です。
+似通った記述なのに、処理が別々の関数に分けられてしまっています。同様にstateも別々に管理されています。
+これ以上stateが増えようものなら、スパゲティコードになる未来が予測できますね。
 
-## useReducer を使う
+## useReducerを使う
 
-そこでもう少しわかりやすいコードにしようという時に使えるのが `useReducer` です。  
-`useReducer` を使うと処理と state をまとめることができます。
+そこでもう少しわかりやすいコードにしようという時に使えるのが`useReducer`です。
+`useReducer`を使うと処理とstateをまとめることができます。
 
 ```jsx:title=jsx
 import React, { useReducer } from "react";
@@ -271,17 +271,17 @@ const useReducerForm = () => {
 export default useReducerForm;
 ```
 
-`state` が一箇所にまとまり、また処理も reducer として一箇所にまとめることができました。  
-同一な処理は同一な `action` にすることで二度書く必要がないので、全体的にすっきりとした記述になります。  
-また新しい処理を拡張する際にも、`action` とそれに伴う条件分岐を増やすだけなので非常に楽ちんですね。
+`state`が一箇所にまとまり、また処理もreducerとして一箇所にまとめることができました。
+同一な処理は同一な`action`にすることで二度書く必要がないので、全体的にすっきりとした記述になります。
+また新しい処理を拡張する際にも、`action`とそれに伴う条件分岐を増やすだけなので非常に楽ちんですね。
 
 ## まとめ
 
-`useReducer` を使用することでフォームの処理がすっきりと書ける（場合がある）ということでした。  
-フォームの項目が少ない場合や処理が単純な場合は `useState` が適している場合もあるので、その辺りはうまく使い分けたいとですね。
+`useReducer`を使用することでフォームの処理がすっきりと書ける（場合がある）ということでした。
+フォームの項目が少ない場合や処理が単純な場合は`useState`が適している場合もあるので、その辺りはうまく使い分けたいとですね。
 
 ## 参考
 
-[フォーム – React](https://ja.reactjs.org/docs/forms.html)  
-[フック API リファレンス – React](https://ja.reactjs.org/docs/hooks-reference.html#usereducer)  
+[フォーム – React](https://ja.reactjs.org/docs/forms.html)
+[フック API リファレンス – React](https://ja.reactjs.org/docs/hooks-reference.html#usereducer)
 [useReducer Form Example. This is a quick and dirty example of… | by Sam Dent | The Startup | Medium](https://medium.com/swlh/usereducer-form-example-16675fa60229)
