@@ -178,7 +178,7 @@ $ yarn build
   <source
     srcset="./assets/img/960-540.png, ./assets/img/1920-1080.png 2x" media="(min-width: 1000px)" alt="16:9" />
   <source srcset="./assets/img/960-720.png, ./assets/img/1920-1440.jpg 2x" alt="4:3" />
-  <img src="/assets/img/1920-1080.png" alt="16:9" />
+  <img src="./assets/img/1920-1080.png" alt="16:9" />
 </picture>
 ```
 ↓
@@ -186,7 +186,7 @@ $ yarn build
 <picture>
   <source srcset="./assets/img/960-540.png, ./assets/img/1920-1080.png 2x" media="(min-width: 1000px)" alt="16:9" width="960" height="540">
   <source srcset="./assets/img/960-720.png, ./assets/img/1920-1440.jpg 2x" alt="4:3" width="960" height="720">
-  <img src="/assets/img/1920-1080.png" alt="16:9" width="1920" height="1080">
+  <img src="./assets/img/1920-1080.png" alt="16:9" width="1920" height="1080">
 </picture>
 ```
 
