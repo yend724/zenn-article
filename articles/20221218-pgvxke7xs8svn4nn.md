@@ -30,11 +30,11 @@ published: true
 
 詳細度という観点からみると、セレクターは以下の3つに分類することができます。
 
-- A: IDセレクター
-- B: クラスセレクター、属性セレクター、擬似クラス
-- C: 要素型セレクター、擬似要素
+- A: [IDセレクター](https://developer.mozilla.org/ja/docs/Web/CSS/ID_selectors)
+- B: [クラスセレクター](https://developer.mozilla.org/ja/docs/Web/CSS/Class_selectors)、[属性セレクター](https://developer.mozilla.org/ja/docs/Web/CSS/Attribute_selectors)、[擬似クラス](https://developer.mozilla.org/ja/docs/Web/CSS/Pseudo-classes)
+- C: [要素型セレクター](https://developer.mozilla.org/ja/docs/Web/CSS/Type_selectors)、[擬似要素](https://developer.mozilla.org/ja/docs/Web/CSS/Pseudo-elements)
 
-上記に分類されていない全称セレクターは、特殊なセレクターであり、詳細度の計算には関与しません。
+上記に分類されていない[全称セレクター](https://developer.mozilla.org/ja/docs/Web/CSS/Universal_selectors)は、特殊なセレクターであり、詳細度の計算には関与しません。
 
 セレクターをA、B、Cという3つに分類しました。詳細度は、この3種類の**セレクターの数**によって決定され、本記事では、*(Aの値, Bの値, Cの値)* のように記述したいと思います。たとえば`#hoge`のようにIDセレクターが1つであれば、 *(1, 0, 0)* であり `#hoge.fuga` のようにIDセレクターとクラスセレクターが含まれていれば *(1, 1, 0)* 、`div span`のように要素型セレクターが2つなら *(0, 0, 2)* となります。
 
