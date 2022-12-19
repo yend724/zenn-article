@@ -361,24 +361,25 @@ p { color: blue !important; } /* (0, 0, 1) */
 ```html:html
 <div id="shadowRoot"></div>
 <p>Light DOM</p>
-<script>
-  const elemnt = document.getElementById('shadowRoot');
-  const shadowRoot = elemnt.attachShadow({ mode: 'closed' });
-  shadowRoot.innerHTML = `
-    <style>
-      p {
-        color: red;
-        text-transform: uppercase;
-      }
-    </style>
-    <p>Shadow DOM</p>
-  `;
-</script>
 ```
 
 ```css:css
 /* Shadow DOM には影響を与えない */
 p { color: blue !important; }
+```
+
+```js:javascript
+const elemnt = document.getElementById('shadowRoot');
+const shadowRoot = elemnt.attachShadow({ mode: 'closed' });
+shadowRoot.innerHTML = `
+  <style>
+    p {
+      color: red;
+      text-transform: uppercase;
+    }
+  </style>
+  <p>Shadow DOM</p>
+`;
 ```
 
 @[codepen](https://codepen.io/yend24/pen/rNrBPvJ)
