@@ -339,9 +339,9 @@ p { color: blue !important; } /* (0, 0, 1) */
 
 ```css:サードパーティ製CSSの例
 /* 詳細度関係なく、base > third-party > resetの順で優先される */
+@layer reset, third-party, base;
 @import(reset.css) layer(reset);
 @import(third-party.css) layer(third-party);
-@layer reset third-party base;
 @layer base {
   /* ...略... */
 }
