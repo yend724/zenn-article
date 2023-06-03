@@ -2,7 +2,7 @@
 title: "Tailwind Variantsに触れてみる"
 emoji: "🍣"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["tailwindcss"]
+topics: ["tailwind-variants", "tailwindcss"]
 published: true
 ---
 
