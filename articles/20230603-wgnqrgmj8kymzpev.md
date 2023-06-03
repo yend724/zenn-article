@@ -9,7 +9,7 @@ published: true
 https://www.tailwind-variants.org/
 
 :::message
-Tailwind Variantsのバージョンは、本記事執筆時点(2023.6.3)において**v0.1.5**となっています。
+本記事執筆時点(2023.6.3)において、Tailwind Variantsのバージョンは**v0.1.5**となっています。
 :::
 
 ## Tailwind Variantsとは
