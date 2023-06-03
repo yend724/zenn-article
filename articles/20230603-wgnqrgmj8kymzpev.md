@@ -303,9 +303,9 @@ https://www.tailwind-variants.org/docs/getting-started#responsive-variants-optio
 
 本記事は触れませんが他にも、別の`variants`に依存した`variants`を追加できる[`compoundVariants`](https://www.tailwind-variants.org/docs/variants#compound-variants)などの機能もあります。
 
-### Slot
+### Slots
 
-[Slot](https://www.tailwind-variants.org/docs/slots)を使用すると、一度に分割された複数のコンポーネントに対するスタイルを作成できます。言葉だけではイメージしづらいと思うので、実際にコード例を見てみましょう。
+[Slots](https://www.tailwind-variants.org/docs/slots)を使用すると、一度に分割された複数のコンポーネントに対するスタイルを作成できます。言葉だけではイメージしづらいと思うので、実際にコード例を見てみましょう。
 
 ```tsx
 import { tv } from 'tailwind-variants';
@@ -378,7 +378,7 @@ caption()
 // => "mt-2 font-bold text-white"
 ```
 
-本記事ではSlotについて、これ以上言及はしませんが、[Slotの合成](https://www.tailwind-variants.org/docs/slots#compound-slots)や[レスポンシブなVariantsとの併用](https://www.tailwind-variants.org/docs/slots#slots-with-responsive-variants)も行うことができます。
+本記事ではSlotsについて、これ以上言及はしませんが、[Slotsの合成](https://www.tailwind-variants.org/docs/slots#compound-slots)や[レスポンシブなVariantsとの併用](https://www.tailwind-variants.org/docs/slots#slots-with-responsive-variants)も行うことができます。
 
 ### スタイルの上書き
 
