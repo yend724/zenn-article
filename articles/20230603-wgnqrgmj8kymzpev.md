@@ -342,7 +342,7 @@ Result:
 */
 ```
 
-また次のように`slot`と`variants`を併用して使うこともできます。
+また次のように`slots`と`variants`を併用して使うこともできます。
 
 ```tsx
 const card = tv({
