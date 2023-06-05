@@ -203,7 +203,7 @@ const button = tv({
       primary: 'bg-blue-500',
       secondary: 'bg-red-500',
     },
-    // booelanなvariantsを設定
+    // booleanなvariantsを設定
     disable: {
       true: 'pointer-events-none opacity-20',
     },
