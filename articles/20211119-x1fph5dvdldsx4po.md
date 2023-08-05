@@ -8,8 +8,7 @@ published: true
 
 # 概要
 
-アニメーションでよく使用される`requestAnimationFrame`。
-非常に便利で使いやすいメソッドなのですが、Reactで扱うには少々癖があったので、今回はそのことについて書いていこうと思います。
+アニメーションでよく使用される`requestAnimationFrame`。非常に便利で使いやすいメソッドなのですが、Reactで扱うには少々癖があったので、今回はそのことについて書いていこうと思います。
 
 # 完成形
 
@@ -17,8 +16,7 @@ published: true
 
 @[codepen](https://codepen.io/yend24/pen/ZEJmVZr)
 
-STARTボタンを押すとカウントの実行。STOPボタンを押すとカウントの停止ができます。
-シンプルなカウンターですが、この実装を完成として、ここまでの過程を考えていきます。
+STARTボタンを押すとカウントの実行。STOPボタンを押すとカウントの停止ができます。シンプルなカウンターですが、この実装を完成として、ここまでの過程を考えていきます。
 
 # requestAnimationFrame
 
@@ -33,8 +31,7 @@ const loop = () => {
 loop();
 ```
 
-よくみる形ですね。コールバックで再帰的に関数を実行することでループを実現しています。
-ループを止めるためには再帰呼び出しを止めるか、`cancelAnimationFrame`を使います。
+よくみる形ですね。コールバックで再帰的に関数を実行することでループを実現しています。ループを止めるためには再帰呼び出しを止めるか、`cancelAnimationFrame`を使います。
 
 https://developer.mozilla.org/ja/docs/Web/API/Window/requestAnimationFrame
 https://developer.mozilla.org/ja/docs/Web/API/Window/cancelAnimationFrame
@@ -95,8 +92,7 @@ const Component = () => {
 };
 ```
 
-一見良いように見えますが、コンポーネントが破棄されたときにループを止める必要がありますね。
-したがって、`useEffect`のクリーンアップ関数として`cancelAnimationFrame`を使います。
+一見良いように見えますが、コンポーネントが破棄されたときにループを止める必要がありますね。したがって、`useEffect`のクリーンアップ関数として`cancelAnimationFrame`を使います。
 
 しかし、`cancelAnimationFrame`を使うためには`requestAnimationFrame`から返される`requestID`が必要です。`requestID`を保持するために`useRef`を使用しましょう。
 
@@ -141,9 +137,7 @@ const Component = () => {
 };
 ```
 
-実際に上記を実装してみると`counter`が更新されません。
-理由としては単純で`useRef`は再描画をトリガーからです。
-解決策として、`useState`を使います。
+実際に上記を実装してみると`counter`が更新されません。理由としては単純で`useRef`は再描画をトリガーしないからです。解決策として、`useState`を使います。
 
 ```jsx
 const Component = () => {
@@ -303,21 +297,17 @@ const Component = () => {
 };
 ```
 
-引数に `isRunning` をとるようにhooksを変更し、trueならループ実行、falseならループ停止を実装しました。
-これで最初に載せたコードの完成となります！
+引数に `isRunning` をとるようにhooksを変更し、trueならループ実行、falseならループ停止を実装しました。これで最初に載せたコードの完成となります！
 
 # 少し応用
 
 @[codepen](https://codepen.io/yend24/pen/QWMYqvp)
 
-ただカウントアップするだけではつまらないので、一例として数字ルーレットアニメーションを実装してみました。
-少し応用するだけで数字ルーレットアニメーションを簡単に実装できますので、使ってみたい方は参考にしてみてください。
+ただカウントアップするだけではつまらないので、一例として数字ルーレットアニメーションを実装してみました。少し応用するだけで数字ルーレットアニメーションを簡単に実装できますので、使ってみたい方は参考にしてみてください。
 
 # まとめ
 
-Reactにおいて`requestAnimationFrame`を扱う方法でした。
-その性質上、パフォーマンスを考えるとだいぶ癖があるように感じました。
-諸々検討した上で、問題が発生しないように使用できると良いですね。
+Reactにおいて`requestAnimationFrame`を扱う方法でした。その性質上、パフォーマンスを考えるとだいぶ癖があるように感じました。諸々検討した上で、問題が発生しないように使用できると良いですね。
 
 # 参考
 
