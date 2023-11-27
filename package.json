@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "new": "node ./scripts/new.js",
+    "new": "node ./scripts/new.ts",
+    "new:draft": "npx ts-node ./scripts/new-draft.ts",
     "preview": "npx zenn preview",
     "start": "yarn preview"
   },
@@ -21,5 +22,10 @@
   "homepage": "https://github.com/yend724/zenn-article#readme",
   "dependencies": {
     "zenn-cli": "^0.1.149"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.3.2"
   }
 }
