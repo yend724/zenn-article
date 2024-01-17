@@ -6,11 +6,11 @@ topics: ["threejs", "glsl", "shader"]
 published: false
 ---
 
-Three.jsの`ShaderMaterial`を用いて画像をブラウザの画面にフィットさせる方法を紹介します。
+Three.jsの`ShaderMaterial`を用いて画像をブラウザの画面にフィットさせる方法を紹介します。本記事では開発環境として[Vite](https://ja.vitejs.dev/)を使用してますが、基本的な部分は他の環境でも活かせると思います。
 
 ## 全体のコード
 
-まず前提として本記事で紹介する全体のコードは次のようになります。開発環境はViteを使用してますが、基本的な部分は他の環境でも活かせると思います。
+まず前提として`Shader`以外の全体のコードを紹介します。後ほど重要な箇所は説明をするので、ざっくりと確認してもらうだけで問題ありません。`Plane`メッシュを1つ置いて、その`Plane`に`ShaderMaterial`でテクスチャを貼り付けています。
 
 ```html:HTML
 <canvas id="canvas"></canvas>
@@ -156,7 +156,29 @@ const init = async () => {
 init();
 ```
 
+## Planeをブラウザの画面サイズと同じ大きさにする
 
+## 画像をブラウザの画面にフィットさせる
+
+### 縦も横も画面にフィットさせる
+
+https://playground.yend.dev/three-fit-texure/fit/
+
+### 縦横比を保ったまま横幅を画面にフィットさせる
+
+https://playground.yend.dev/three-fit-texure/fit-width/
+
+### 縦横比を保ったまま縦幅を画面にフィットさせる
+
+https://playground.yend.dev/three-fit-texure/fit-height/
+
+### `object-fit:cover`のような挙動にする
+
+https://playground.yend.dev/three-fit-texure/cover/
+
+### `object-fit:contain`のような挙動にする
+
+https://playground.yend.dev/three-fit-texure/contain/
 
 
 ## 参考
