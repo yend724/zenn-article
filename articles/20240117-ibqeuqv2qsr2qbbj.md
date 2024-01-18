@@ -6,36 +6,35 @@ topics: ["threejs", "glsl", "shader"]
 published: false
 ---
 
-Three.jsの`ShaderMaterial`を用いてテクスチャをブラウザの画面にフィットさせる方法を紹介します。本記事では開発環境として[Vite](https://ja.vitejs.dev/)を使用してますが、基本的な部分は他の環境でも活かせると思います。
+Three.jsで`ShaderMaterial`を使ってテクスチャをブラウザの画面にフィットさせる方法について紹介します。この記事では、開発環境としてViteを採用していますが、紹介する考え方は他の開発環境でも同様に適用可能です。
 
-## 全体のコード
+## 全体のコードの概要
 
-本記事で紹介する方法の全体コードになります。ざっくり説明すると、`Plane`メッシュを1つ置いて、その`Plane`に`ShaderMaterial`でテクスチャを貼り付けているだけです。
+ここでは、`Plane`メッシュを作成し、`ShaderMaterial`を使用してテクスチャを適用する方法を紹介します。詳細なコードは以下のリンクから確認できます。
 
 https://github.com/yend724/yend-playground/blob/main/src/three-fit-texure/assets/ts/index.ts
 
-HTML側には以下のような`canvas`要素と`script`要素が存在することを想定しています。`script`要素は後述するシェーダーのコードを記述するためのものです。
+HTMLはシェーダー用の`script`要素と`canvas`要素を含む以下の構成を想定しています。
 
 ```html:HTML
+<!-- script要素 -->
+<script id="vertexShader" type="x-shader/x-vertex">
+  //...頂点シェーダー
+</script>
+<script id="fragmentShader" type="x-shader/x-fragment">
+  //...フラグメントシェーダー
+</script>
+
+<!-- canvas要素 -->
 <canvas id="canvas"></canvas>
 ```
 
-```html:HTML
-<script id="vertexShader" type="x-shader/x-vertex">
-  //...頂点シェーダーのコード
-</script>
-<script id="fragmentShader" type="x-shader/x-fragment">
-  //...フラグメントシェーダーのコード
-</script>
-```
+## Planeを画面サイズと同じ大きさにする
 
-## Planeをブラウザの画面サイズと同じ大きさにする
-
-まずは下準備として`Plane`をブラウザの画面サイズと同じ大きさにします。本記事では`PerspectiveCamera`ではなく`OrthographicCamera`を使用します。`OrthographicCamera`は奥行きの情報を持たないカメラなので、今回のように`Plane`メッシュを1つ画面サイズに合わせるだけであれば、遠近法を考慮する必要がなく個人的には楽だと思います。
-
-`OrthographicCamera`の`left,right,top,bottom`をブラウザの画面サイズに合わせます。
+Planeを画面サイズと同じ大きにするため、`OrthographicCamera`を使用します。このカメラは平行投影を表現することが可能で遠近感を持たないため、`Plane`メッシュを画面サイズに合わせるのが容易です。
 
 ```ts:OrthographicCamera
+// OrthographicCameraでwindowサイズを指定
 const camera = new THREE.OrthographicCamera(
   windowSize.width / -2,
   windowSize.width / 2,
@@ -49,7 +48,7 @@ camera.position.z = 5;
 scene.add(camera);
 ```
 
-その後、`PlaneGeometry`にブラウザの画面サイズを指定することで、`Plane`をブラウザの画面サイズと同じ大きさにすることが簡単にできます。
+次に、`PlaneGeometry`で画面サイズを指定し、`Plane`を画面と同じサイズにします。
 
 ```ts:PlaneGeometry
 const geometry = new THREE.PlaneGeometry(windowSize.width, windowSize.height);
@@ -57,36 +56,44 @@ const geometry = new THREE.PlaneGeometry(windowSize.width, windowSize.height);
 
 ### リサイズ処理
 
-リザイズ時には`PlaneGeometry`と`Camera`を更新します。
+ブラウザのリサイズ時は、`renderer`、`camera`、`geometry`を更新して適切な表示を維持します。また`uniform`で渡している`uScreenAspect`（[ShaderMaterialの設定](#shadermaterial%E3%81%AE%E8%A8%AD%E5%AE%9A)を参照）の更新も忘れないようにしてください。
 
 ```ts:Planeの大きさを変更する
+// windowのリサイズ処理
 const onResize = () => {
   const windowSize = getWindowSize();
 
+  // planeのサイズをwindowのサイズに合わせる
   plane.geometry = new THREE.PlaneGeometry(
     windowSize.width,
     windowSize.height
   );
 
+  // uniformで渡しているwindowのアスペクト比を更新
   material.uniforms.uScreenAspect.value = windowSize.aspect;
 
+  // cameraを更新
   camera.left = windowSize.width / -2;
   camera.right = windowSize.width / 2;
   camera.top = windowSize.height / 2;
   camera.bottom = windowSize.height / -2;
   camera.updateProjectionMatrix();
 
+  // rendererを更新
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(windowSize.width, windowSize.height);
 };
 window.addEventListener('resize', onResize);
 ```
 
-## uniform変数の定義
+## ShaderMaterialの設定
 
-`ShaderMaterial`に渡している`uniform`変数は以下のようになります。
+`ShaderMaterial`に渡す`uniform`変数は以下のように設定します。
 
-```ts:uniform変数
+`uniform`変数として、`uTexture`、`uTextureAspect`、`uScreenAspect`を設定しています。`uTextureAspect`はテクスチャのアスペクト比、`uScreenAspect`は画面のアスペクト比です。
+
+```ts:ShaderMaterialの設定
+// uniform変数の一覧
 const uniforms = {
   uTexture: {
     value: texture,
@@ -98,9 +105,8 @@ const uniforms = {
     value: screenAspect,
   },
 };
-```
 
-```ts:ShaderMaterial
+// ShaderMaterialの設定
 const material = new THREE.ShaderMaterial({
   side: THREE.DoubleSide,
   uniforms,
@@ -111,9 +117,9 @@ const material = new THREE.ShaderMaterial({
 
 ## テクスチャをブラウザの画面にフィットさせる
 
-`Plane`をブラウザの画面サイズと同じ大きさにしたら、次はテクスチャをブラウザの画面にフィットさせます。テクスチャをブラウザの画面にフィットさせるには、ブラウザのアスペクト比とテクスチャのアスペクト比を計算して、その比率を元にテクスチャのUV座標を計算します。
+ブラウザの画面に合わせてテクスチャをフィットさせるには、ブラウザとテクスチャのアスペクト比に基づいてUV座標を計算します。ここでは画面にフィットさせるいくつかのパターンを紹介しますが、頂点シェーダーは次の共通のコードを使用しています。
 
-頂点シェーダーは共通で、以下のようになっています。頂点シェーダーでは、`varying`を使って`uv`座標をフラグメントシェーダーに渡しています。
+頂点シェーダーでは、MVP行列による座標変換と`varying`を用いたUV座標の受け渡しを行なっています。`vUv`はフラグメントシェーダーに渡すための変数です。
 
 ```glsl:vertexShader
 varying vec2 vUv;
@@ -125,11 +131,9 @@ void main() {
 }
 ```
 
-### 幅・高さともに画面サイズにする
+### 幅・高さともに画面と同じ大きさにする
 
-まずは幅も高さも画面にフィットさせる方法を紹介します。これはテクスチャ自体のアスペクト比に関係なく、そのままブラウザの画面にフィットする方法です。
-
-CSSで`img`タグに`width:100%, height:100%`を指定したような挙動になります。
+この方法はテクスチャのアスペクト比を無視し、画面に完全にフィットさせます。CSSの`width:100%,height:100%`のような効果を得られます。
 
 ```glsl:fragmentShader
 uniform sampler2D uTexture;
@@ -140,13 +144,11 @@ void main() {
 }
 ```
 
-以下DEMOです。
-
-https://playground.yend.dev/three-fit-texure/fit/
+[幅・高さともに画面と同じ大きさにするDEMO](https://playground.yend.dev/three-fit-texure/fit/)
 
 ### テクスチャのアスペクト比を保ったまま幅を画面にフィットさせる
 
-こちらはテクスチャのアスペクト比を保った状態で、幅のみを画面にフィットさせる方法です。CSSで`img`タグに`width:100,height:auto`を指定したような挙動になります。
+この方法はテクスチャのアスペクト比を保った状態で、幅のみを画面にフィットさせます。CSSの`width:100,height:auto`のような効果を得られます。
 
 ```glsl:fragmentShader
 uniform sampler2D uTexture;
@@ -168,24 +170,18 @@ void main() {
   );
 
   vec4 color = texture2D(uTexture, textureUv);
-
   // テクスチャの範囲外は黒にする
   vec4 black = vec4(0.0, 0.0, 0.0, 1.0);
   float outOfBounds = float(textureUv.x < 0.0 || textureUv.x > 1.0 || textureUv.y < 0.0 || textureUv.y > 1.0);
-
   gl_FragColor = mix(color, black, outOfBounds);
 }
 ```
 
-以下DEMOです。
-
-https://playground.yend.dev/three-fit-texure/fit-width/
+[テクスチャのアスペクト比を保ったまま幅を画面にフィットさせるDEMO](https://playground.yend.dev/three-fit-texure/fit-width/)
 
 ### テクスチャのアスペクト比を保ったまま高さを画面にフィットさせる
 
-こちらはテクスチャのアスペクト比を保った状態で、高さのみを画面にフィットさせる方法です。CSSで`img`タグに`width:auto,height:100%`を指定したような挙動になります。
-
-```glsl:fragmentShader
+この方法はテクスチャのアスペクト比を保った状態で、高さのみを画面にフィットさせます。CSSの`width:auto,height:100%`のような効果を得られます。
 
 ```glsl:fragmentShader
 uniform sampler2D uTexture;
@@ -207,22 +203,18 @@ void main() {
   );
 
   vec4 color = texture2D(uTexture, textureUv);
-
   // テクスチャの範囲外は黒にする
   vec4 black = vec4(0.0, 0.0, 0.0, 1.0);
   float outOfBounds = float(textureUv.x < 0.0 || textureUv.x > 1.0 || textureUv.y < 0.0 || textureUv.y > 1.0);
-
   gl_FragColor = mix(color, black, outOfBounds);
 }
 ```
 
-以下DEMOです。
+[テクスチャのアスペクト比を保ったまま高さを画面にフィットさせるDEMO](https://playground.yend.dev/three-fit-texure/fit-height/)
 
-https://playground.yend.dev/three-fit-texure/fit-height/
+### 画面を覆うように表示する
 
-### `object-fit:cover`のような挙動にする
-
-こちらはCSSで`img`タグに`object-fit:cover`を指定したような挙動です。
+この方法はテクスチャを画面に覆うように表示させます。テクスチャのアスペクト比は保持され、CSSの`background-size:cover`のような効果を得られます。
 
 ```glsl:fragmentShader
 uniform sampler2D uTexture;
@@ -247,13 +239,11 @@ void main() {
 }
 ```
 
-以下DEMOです。
+[画面を覆うように表示するDEMO](https://playground.yend.dev/three-fit-texure/cover/)
 
-https://playground.yend.dev/three-fit-texure/cover/
+### 画面に収まるように表示する
 
-### `object-fit:contain`のような挙動にする
-
-こちらはCSSで`img`タグに`object-fit:contain`を指定したような挙動です。
+この方法はテクスチャを画面に収まるように表示させます。テクスチャのアスペクト比は保持され、CSSの`background-size:contain`のような効果を得られます。
 
 ```glsl:fragmentShader
 uniform sampler2D uTexture;
@@ -274,22 +264,18 @@ void main() {
   );
 
   vec4 color = texture2D(uTexture, textureUv);
-
   // テクスチャの範囲外は黒にする
   vec4 black = vec4(0.0, 0.0, 0.0, 1.0);
   float outOfBounds = float(textureUv.x < 0.0 || textureUv.x > 1.0 || textureUv.y < 0.0 || textureUv.y > 1.0);
-
   gl_FragColor = mix(color, black, outOfBounds);
 }
 ```
 
-以下DEMOです。
+[画面に収まるように表示するDEMO](https://playground.yend.dev/three-fit-texure/contain/)
 
-https://playground.yend.dev/three-fit-texure/contain/
+### 画面に収まるように表示しつつリピートする
 
-### `object-fit:contain`の挙動をしつつ、リピートする
-
-こちらは`object-fit:contain`を指定した状態で空いたスペースにテクスチャをリピートさせる方法です。
+この方法はテクスチャを画面に収めつつ、空いたスペースにテクスチャをリピートされるように表示させます。CSSの`background-size:contain,background-repeat:repeat;`とのような効果を得られます。
 
 ```glsl:fragmentShader
 uniform sampler2D uTexture;
@@ -311,18 +297,15 @@ void main() {
 
   // fractでリピートする
   vec4 color = texture2D(uTexture, fract(textureUv));
-
   gl_FragColor = color;
 }
 ```
 
-以下DEMOです。
-
-https://playground.yend.dev/three-fit-texure/contain-repeat/
+[画面に収まるように表示しつつリピートするDEMO](https://playground.yend.dev/three-fit-texure/contain-repeat/)
 
 ## おわりに
 
-`ShaderMaterial`を使ってテクスチャをブラウザの画面にフィットさせる方法を紹介しました。それほど難しいものではないですが、地味に忘れがちなので自分への備忘録も兼ねて記事にしました。改めて思考が整理されてよかったです。
+`ShaderMaterial`を使用してテクスチャをブラウザの画面にフィットさせる方法についてご紹介しました。本記事の内容は非常に基本的なものですが、細かい箇所で忘れがちな点も多いため、自分用の備忘録も兼ねてまとめてみました。改めて思考が整理されたので良かったです。
 
 ## 参考
 https://threejs.org/docs/#api/en/cameras/OrthographicCamera
