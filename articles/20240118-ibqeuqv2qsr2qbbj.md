@@ -134,7 +134,7 @@ void main() {
 
 ### 幅・高さともに画面と同じ大きさにする
 
-この方法はテクスチャのアスペクト比を無視し、画面に完全にフィットさせます。CSSの`width:100%,height:100%`のような効果を得られます。
+この方法はテクスチャのアスペクト比を無視し、画面に完全にフィットさせます。CSSの`width:100%;height:100%;`のような効果を得られます。
 
 ```glsl:fragmentShader
 uniform sampler2D uTexture;
@@ -149,7 +149,7 @@ void main() {
 
 ### テクスチャのアスペクト比を保ったまま幅を画面にフィットさせる
 
-この方法はテクスチャのアスペクト比を保った状態で、幅のみを画面にフィットさせます。CSSの`width:100,height:auto`のような効果を得られます。
+この方法はテクスチャのアスペクト比を保った状態で、幅のみを画面にフィットさせます。CSSの`width:100%;height:auto;`のような効果を得られます。
 
 ```glsl:fragmentShader
 uniform sampler2D uTexture;
@@ -182,7 +182,7 @@ void main() {
 
 ### テクスチャのアスペクト比を保ったまま高さを画面にフィットさせる
 
-この方法はテクスチャのアスペクト比を保った状態で、高さのみを画面にフィットさせます。CSSの`width:auto,height:100%`のような効果を得られます。
+この方法はテクスチャのアスペクト比を保った状態で、高さのみを画面にフィットさせます。CSSの`width:auto;height:100%;`のような効果を得られます。
 
 ```glsl:fragmentShader
 uniform sampler2D uTexture;
@@ -215,7 +215,7 @@ void main() {
 
 ### 画面を覆うように表示する
 
-この方法はテクスチャを画面に覆うように表示させます。テクスチャのアスペクト比は保持され、CSSの`background-size:cover`のような効果を得られます。
+この方法はテクスチャを画面に覆うように表示させます。テクスチャのアスペクト比は保持され、CSSの`background-size:cover;`のような効果を得られます。
 
 ```glsl:fragmentShader
 uniform sampler2D uTexture;
@@ -244,7 +244,7 @@ void main() {
 
 ### 画面に収まるように表示する
 
-この方法はテクスチャを画面に収まるように表示させます。テクスチャのアスペクト比は保持され、CSSの`background-size:contain`のような効果を得られます。
+この方法はテクスチャを画面に収まるように表示させます。テクスチャのアスペクト比は保持され、CSSの`background-size:contain;`のような効果を得られます。
 
 ```glsl:fragmentShader
 uniform sampler2D uTexture;
@@ -276,7 +276,7 @@ void main() {
 
 ### 画面に収まるように表示しつつリピートする
 
-この方法はテクスチャを画面に収めつつ、空いたスペースにテクスチャをリピートされるように表示させます。CSSの`background-size:contain,background-repeat:repeat;`とのような効果を得られます。
+この方法はテクスチャを画面に収めつつ、空いたスペースにテクスチャをリピートされるように表示させます。CSSの`background-size:contain;background-repeat:repeat;`とのような効果を得られます。
 
 ```glsl:fragmentShader
 uniform sampler2D uTexture;
