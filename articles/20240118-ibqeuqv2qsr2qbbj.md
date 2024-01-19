@@ -49,13 +49,20 @@ void main() {
 }
 ```
 
-カメラに関しては、`PerspectiveCamera`や`OrthographicCamera`の代わりに、基本クラスの`Camera`を使用します。これは、`vertexShader`でMVP変換を行わないため、カメラの影響を受けないためです。ただし、描画するにあたり`renderer`にはカメラオブジェクトを渡す必要があるため、基本クラスである`Camera`を使用しています。
+カメラに関しては、~~`PerspectiveCamera`や`OrthographicCamera`の代わりに、基本クラスの`Camera`を使用します~~何も設定していない`OrthographicCamera`を使用します。
 
+:::message
+2024-01-18 追記:
+こちら[@focru_ino](https://x.com/focru_ino/status/1748193817159991356)さんから基本クラスの`Camera`から直接インスタンスを作成することが非推奨であることを教えていただいたので修正します。以降は`OrthographicCamera`を使用します。
 参考：[Camera – three.js doc](https://threejs.org/docs/#api/en/cameras/Camera)
+:::
+
+これは、`vertexShader`でMVP変換を行わないので、カメラの設定の影響を受けないためです。ただし、描画するにあたり`renderer`にはカメラオブジェクトが必須なため、カメラ自体は作成する必要があります。
 
 ```ts:camera
-// vertexShaderでMVPの変換を行わないので、基本クラスのCameraを使用する
-const camera = new THREE.Camera();
+const camera = new THREE.OrthographicCamera();
+// パフォーマンスを考慮する場合、matrixAutoUpdateをfalseにする
+camera.matrixAutoUpdate = false;
 ```
 
 ### リサイズ処理
