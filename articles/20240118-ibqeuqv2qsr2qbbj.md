@@ -32,53 +32,43 @@ HTMLはシェーダー用の`script`要素と`canvas`要素を含む以下の構
 
 ## Planeを画面サイズと同じ大きさにする
 
-Planeを画面サイズと同じ大きにするため、`OrthographicCamera`を使用します。このカメラは平行投影を表現することが可能で遠近感を持たないため、`Plane`メッシュを画面サイズに合わせるのが容易です。
+`PlaneGeometry`のサイズを`2`に設定しています。`vertexShader`で、MVPの変換を行わず、頂点の`position`をそのまま`gl_Position`に渡しています。結果として、描画される頂点座標は何も変換がされていない`(-1,-1,-1)`から`(1,1,1)`までの範囲（正規化デバイス座標）に収まります。`PlaneGeometry`のサイズを`2`に設定することで、`Plane`は画面サイズにぴったり合うようになります。
 
-```ts:OrthographicCamera
-// OrthographicCameraでwindowサイズを指定
-const camera = new THREE.OrthographicCamera(
-  windowSize.width / -2,
-  windowSize.width / 2,
-  windowSize.height / 2,
-  windowSize.height / -2,
-  1,
-  10
-);
-// z軸の位置はnear,farの間に入っていれば良い（今回だと1 ~ 10）
-camera.position.z = 5;
-scene.add(camera);
-```
-
-次に、`PlaneGeometry`で画面サイズを指定し、`Plane`を画面と同じサイズにします。
+参考：[WebGL のモデル、ビュー、投影](https://developer.mozilla.org/ja/docs/Web/API/WebGL_API/WebGL_model_view_projection)
 
 ```ts:PlaneGeometry
-const geometry = new THREE.PlaneGeometry(windowSize.width, windowSize.height);
+const geometry = new THREE.PlaneGeometry(2, 2);
+```
+
+```glsl:vertexShader
+varying vec2 vUv;
+void main() {
+  vUv = uv;
+  // MVPの変換を行わないので、そのままのpositionを渡す
+  gl_Position = vec4(position, 1.0);
+}
+```
+
+カメラに関しては、`PerspectiveCamera`や`OrthographicCamera`の代わりに、基本クラスの`Camera`を使用します。これは、`vertexShader`でMVP変換を行わないため、カメラの影響を受けないためです。ただし、描画するにあたり`renderer`にはカメラオブジェクトを渡す必要があるため、基本クラスである`Camera`を使用しています。
+
+参考：[Camera – three.js doc](https://threejs.org/docs/#api/en/cameras/Camera)
+
+```ts:camera
+// vertexShaderでMVPの変換を行わないので、基本クラスのCameraを使用する
+const camera = new THREE.Camera();
 ```
 
 ### リサイズ処理
 
-ブラウザのリサイズ時は、`renderer`、`camera`、`geometry`を更新して適切な表示を維持します。また`uniform`で渡している`uScreenAspect`（[ShaderMaterialの設定](#shadermaterial%E3%81%AE%E8%A8%AD%E5%AE%9A)を参照）の更新も忘れないようにしてください。
+ブラウザのリサイズ時は、`renderer`を更新して適切な表示を維持します。また`uniform`で渡している`uScreenAspect`（[ShaderMaterialの設定](#shadermaterial%E3%81%AE%E8%A8%AD%E5%AE%9A)を参照）の更新も忘れないようにしてください。
 
 ```ts:Planeの大きさを変更する
 // windowのリサイズ処理
 const onResize = () => {
   const windowSize = getWindowSize();
 
-  // planeのサイズをwindowのサイズに合わせる
-  plane.geometry = new THREE.PlaneGeometry(
-    windowSize.width,
-    windowSize.height
-  );
-
   // uniformで渡しているwindowのアスペクト比を更新
   material.uniforms.uScreenAspect.value = windowSize.aspect;
-
-  // cameraを更新
-  camera.left = windowSize.width / -2;
-  camera.right = windowSize.width / 2;
-  camera.top = windowSize.height / 2;
-  camera.bottom = windowSize.height / -2;
-  camera.updateProjectionMatrix();
 
   // rendererを更新
   renderer.setPixelRatio(window.devicePixelRatio);
@@ -109,7 +99,6 @@ const uniforms = {
 
 // ShaderMaterialの設定
 const material = new THREE.ShaderMaterial({
-  side: THREE.DoubleSide,
   uniforms,
   vertexShader: VertexShader,
   fragmentShader: FragmentShader,
@@ -118,17 +107,15 @@ const material = new THREE.ShaderMaterial({
 
 ## テクスチャをブラウザの画面にフィットさせる
 
-ブラウザの画面に合わせてテクスチャをフィットさせるには、ブラウザとテクスチャのアスペクト比に基づいてUV座標を計算します。ここでは画面にフィットさせるいくつかのパターンを紹介しますが、頂点シェーダーは次の共通のコードを使用しています。
+ブラウザの画面に合わせてテクスチャをフィットさせるには、ブラウザとテクスチャのアスペクト比に基づいてUV座標を計算します。ここでは画面にフィットさせるいくつかのパターンを紹介します。
 
-頂点シェーダーでは、MVP行列による座標変換と`varying`を用いたUV座標の受け渡しを行なっています。`vUv`はフラグメントシェーダーに渡すための変数です。
+「[Planeを画面サイズと同じ大きさにする](#plane%E3%82%92%E7%94%BB%E9%9D%A2%E3%82%B5%E3%82%A4%E3%82%BA%E3%81%A8%E5%90%8C%E3%81%98%E5%A4%A7%E3%81%8D%E3%81%95%E3%81%AB%E3%81%99%E3%82%8B)」の箇所で、すでにコードを見てしまいましたが、頂点シェーダーは次の共通のコードを使用しています。頂点シェーダーでは`varying`を用いたUV座標の受け渡しを行なっています。`vUv`はフラグメントシェーダーに渡すための変数です。
 
 ```glsl:vertexShader
 varying vec2 vUv;
 void main() {
   vUv = uv;
-  vec4 worldPosition = modelMatrix * vec4(position, 1.0);
-  vec4 mvPosition =  viewMatrix * worldPosition;
-  gl_Position = projectionMatrix * mvPosition;
+  gl_Position = vec4(position, 1.0);
 }
 ```
 
@@ -309,5 +296,5 @@ void main() {
 `ShaderMaterial`を使用してテクスチャをブラウザの画面にフィットさせる方法についてご紹介しました。本記事の内容は非常に基本的なものですが、細かい箇所で忘れがちな点も多いため、自分用の備忘録も兼ねてまとめてみました。改めて思考が整理されたので良かったです。
 
 ## 参考
-https://threejs.org/docs/#api/en/cameras/OrthographicCamera
+https://threejs.org/
 https://zenn.dev/bokoko33/articles/bd6744879af0d5
