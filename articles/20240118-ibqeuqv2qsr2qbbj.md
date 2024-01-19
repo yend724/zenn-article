@@ -53,7 +53,7 @@ void main() {
 
 :::message
 2024-01-18 追記:
-こちら[@focru_ino](https://x.com/focru_ino/status/1748193817159991356)さんから基本クラスの`Camera`から直接インスタンスを作成することが非推奨であることを教えていただいたので修正します。以降は`OrthographicCamera`を使用します。
+こちら[@focru_ino](https://x.com/focru_ino/status/1748193817159991356)さんより、基本クラスの`Camera`から直接インスタンスを作成することが非推奨である旨を教えていただいたので修正します。以降は`OrthographicCamera`を使用します。
 参考：[Camera – three.js doc](https://threejs.org/docs/#api/en/cameras/Camera)
 :::
 
