@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/yend724/zenn-article#readme",
   "dependencies": {
-    "zenn-cli": "^0.1.150"
+    "zenn-cli": "^0.1.151"
   },
   "devDependencies": {
     "@types/node": "^20.10.0",
