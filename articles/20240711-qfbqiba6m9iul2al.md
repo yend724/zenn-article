@@ -15,7 +15,7 @@ published_at: 2024-07-11 13:45
 
 まず`useEffect`について考える前に、コンポーネントの純粋性について理解する必要があります。Reactにおいて純粋性は重要な概念の1つです。
 
-前提として、Reactではすべてのコンポーネントが[純関数](https://en.wikipedia.org/wiki/Pure_function)あることを仮定しています。
+前提として、Reactではすべてのコンポーネントが[純関数](https://en.wikipedia.org/wiki/Pure_function)であることを仮定しています。
 
 > Reactは、あなたが書くすべてのコンポーネントが純関数であると仮定しています。
 > 参照：https://ja.react.dev/learn/keeping-components-pure#purity-components-as-formulas
