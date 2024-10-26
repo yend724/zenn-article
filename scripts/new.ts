@@ -1,19 +1,17 @@
-const { execSync } = require('child_process');
+import { execSync } from 'child_process';
 
-const generateRandom = (length = 16) => {
+const generateRandom = (length: number = 16): string => {
   const s = 'abcdefghijklmnopqrstuvwxyz0123456789';
-  const n = length;
-  const r = Array.from({ length: n })
+  return Array.from({ length })
     .map(() => s[Math.floor(Math.random() * s.length)])
     .join('');
-  return r;
 };
-const generateDate = () => {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = ('0' + (now.getMonth() + 1)).slice(-2);
-  const date = ('0' + now.getDate()).slice(-2);
-  return year + month + date;
+
+const generateDate = (): string => {
+  const year = '0000';
+  const month = '00';
+  const date = '00';
+  return `${year}${month}${date}`;
 };
 
 execSync(`npx zenn new:article --slug ${generateDate()}-${generateRandom()}`);
