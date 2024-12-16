@@ -1,7 +1,5 @@
 {
   "extends": ["config:recommended"],
-  "dependencyDashboard": false,
-  "labels": ["dependencies"],
   "timezone": "Asia/Tokyo",
   "ignoreTests": true,
   "schedule": ["every weekend"]
