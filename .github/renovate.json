@@ -3,5 +3,6 @@
   "extends": ["config:recommended"],
   "timezone": "Asia/Tokyo",
   "ignoreTests": true,
-  "schedule": ["every weekend"]
+  "schedule": ["every weekend"],
+  "assignees": ["@yend724"]
 }
