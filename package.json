@@ -7,7 +7,7 @@
   "scripts": {
     "new": "npx tsx ./scripts/new.ts",
     "preview": "npx zenn preview",
-    "start": "yarn preview"
+    "dev": "npm run preview"
   },
   "repository": {
     "type": "git",
