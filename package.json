@@ -22,7 +22,7 @@
   "homepage": "https://github.com/yend724/zenn-article#readme",
   "devDependencies": {
     "@types/node": "^24.0.0",
-    "typescript": "^5.3.2"
+    "typescript": "^6.0.0"
   },
   "dependencies": {
     "zenn-cli": "^0.4.7"
